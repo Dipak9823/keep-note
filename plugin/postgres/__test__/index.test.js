@@ -28,4 +28,22 @@ describe("Postgres plugin", () => {
 
     expect(fastify.pg).toBeDefined();
   });
+
+  it("should throw error when invalid db config is passed", async () => {
+    const invalidDbConfig = {
+      ...dbConfig,
+      DB_HOST: undefined
+    };
+
+    let error;
+    try {
+      fastify.register(postgres, invalidDbConfig);
+      await fastify.ready();
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toEqual(new Error("should have required property 'DB_HOST'"));
+    expect(fastify.pg).toBeUndefined();
+  });
 });
