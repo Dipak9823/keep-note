@@ -11,7 +11,7 @@ module.exports=fp((fastify,options,next)=>{
             archive:note.archive
         }
 
-        const sql=SQL `INSERT INTO notes(
+        const sql=SQL`INSERT INTO notes(
                         id,
                         title,
                         description,
@@ -31,6 +31,10 @@ module.exports=fp((fastify,options,next)=>{
             console.log(err);
         }
     }
-    fastify.decorate("noteRepository",{insert});
+
+    const get=async()=>{
+        return null;
+    }
+    fastify.decorate("noteRepository",{insert,get});
     next();
 })

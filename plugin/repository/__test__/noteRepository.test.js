@@ -26,7 +26,7 @@ describe("Notes Repository",()=>{
             archive:false
         }
 
-        it("It should return note when it successfully added to the database",async()=>{
+        it("should return note when it successfully added to the database",async()=>{
             fastify.pg.query.mockResolvedValue({
                 rows:[{...data}]
             })
@@ -35,5 +35,19 @@ describe("Notes Repository",()=>{
             expect(fastify.pg.query).toHaveBeenCalled();
             expect(result).toEqual(data);
         })
+    });
+
+    describe("Get notes from database",()=>{
+        it("should return null, if theres is no notes in database",async()=>{
+            fastify.pg.query.mockResolvedValueOnce({
+                rows:[], rowCount:0
+            });
+
+            const response=await fastify.noteRepository.get();
+            expect(fastify.pg.query).toHaveBeenCalled();
+            expect(response).toBeNull
+        })
+
+        it("")
     })
 });
