@@ -11,6 +11,10 @@ const init=()=>{
         ignorePattern: /^(__tests__|schema)/
     });
 
+    fastify.register(autoload,{
+        dir: path.join(__dirname,'api'),
+        ignorePattern: /^(__tests__|schema)/
+    })
     return fastify;
 }
 

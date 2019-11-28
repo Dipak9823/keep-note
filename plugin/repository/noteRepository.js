@@ -33,7 +33,14 @@ module.exports=fp((fastify,options,next)=>{
     }
 
     const get=async()=>{
-        return null;
+        const sql=SQL`SELECT * FROM notes`;
+        try{
+            const result=await fastify.pg.query(sql);
+            return result.rowCount <= 0 ? null : result.rows[0];
+        }
+       catch(err){
+           console.log(err);
+       }
     }
     fastify.decorate("noteRepository",{insert,get});
     next();
