@@ -2,6 +2,7 @@ const Ajv=require('ajv');
 const Fastify=require('fastify')({logger:true});
 const path=require('path');
 const autoload=require('autoload');
+const postgres=require('./src/plugin/postgres')
 
 const init=()=>{
     const fastify=Fastify;
@@ -15,6 +16,8 @@ const init=()=>{
         dir: path.join(__dirname,'api'),
         ignorePattern: /^(__tests__|schema)/
     })
+
+    fastify.register(postgres);
     return fastify;
 }
 
